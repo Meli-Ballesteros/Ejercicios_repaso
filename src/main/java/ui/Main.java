@@ -1,5 +1,6 @@
 package ui;
 import model.Ejercicios;
+import model.Gmail;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -9,6 +10,7 @@ import java.util.Scanner;
 public class Main {
 
     private static final Ejercicios ejercicios = new Ejercicios();
+    private static final Gmail gmail = new Gmail();
 
 
     public static void main(String[] args) {
@@ -20,7 +22,7 @@ public class Main {
             // Mostrar las opciones del menú
             System.out.println("===== MENÚ =====");
             System.out.println("1. Calculadora 1");
-            System.out.println("2. Ejercicio 2");
+            System.out.println("2. Gmail 2");
             System.out.println("3. Ejercicio 3");
             System.out.println("4. Ejercicio 4");
             System.out.println("5. Salir");
@@ -34,6 +36,7 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("Has elegido la Opción 2.");
+                    validadorGmail(read);
                     break;
                 case 3:
                     System.out.println("Has elegido la Opción 3.");
@@ -84,6 +87,21 @@ public class Main {
             System.out.println("por favor ingrese un numero valido.");
             read.next();
         }
+    }
+
+    public static void validadorGmail(Scanner read){
+
+        try {
+            String email;
+            System.out.println("ingrese un correo electronico: ");
+            read.nextLine();
+            email = read.nextLine();
+            gmail.validarEmail(email);
+           
+        } catch (Exception e) {
+            System.out.println("ocurrio un error " + e.getMessage());
+        }
+
     }
 
 }
