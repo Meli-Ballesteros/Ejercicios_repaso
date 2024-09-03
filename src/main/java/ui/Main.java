@@ -1,16 +1,19 @@
 package ui;
+import model.Burbuja;
 import model.Ejercicios;
 import model.Gmail;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-//Suma de dos números: Escribe un programa que solicite
-// al usuario dos números e imprima su suma.
+import static model.Burbuja.imprimirArreglo;
+
+
 public class Main {
 
     private static final Ejercicios ejercicios = new Ejercicios();
     private static final Gmail gmail = new Gmail();
+    private static final Burbuja burbuja= new Burbuja();
 
 
     public static void main(String[] args) {
@@ -23,7 +26,7 @@ public class Main {
             System.out.println("===== MENÚ =====");
             System.out.println("1. Calculadora 1");
             System.out.println("2. Gmail 2");
-            System.out.println("3. Ejercicio 3");
+            System.out.println("3. Metodo Burbuja 3");
             System.out.println("4. Ejercicio 4");
             System.out.println("5. Salir");
             System.out.print("Elige una opción: ");
@@ -40,6 +43,7 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("Has elegido la Opción 3.");
+                    ordenarNotasEstudiantes(read);
                     break;
                 case 4:
                     System.out.println("Has elegido la Opción 4.");
@@ -97,10 +101,67 @@ public class Main {
             read.nextLine();
             email = read.nextLine();
             gmail.validarEmail(email);
-           
+
         } catch (Exception e) {
             System.out.println("ocurrio un error " + e.getMessage());
         }
+
+    }
+
+    public static void ordenarNotasEstudiantes(Scanner read){
+        int cantidadNotas;
+        System.out.println("ingrese la cantidad de notas de estudiantes que desea ordenar " );
+
+        while(true){ // el while true es para numero positivos
+            try {
+                cantidadNotas= read.nextInt();
+                if(cantidadNotas <= 0){
+                  System.out.println("las cantidad de notas debe ser mayor a 0. intente de nuevo");
+                }else{
+                    break;
+                }
+            }catch (InputMismatchException e){
+                System.out.println("Entrada no valida, porfavor ingrese un numero entero");
+                read.next();// limpia la entrada no valida
+            }
+        }
+
+        double notas[]= new double[cantidadNotas]; //inicializacion del arreglo
+
+        System.out.println("Porfavor ingrese las notas de"+cantidadNotas+"los estudiantes ");
+        for (int i=0; i< notas.length;i++){
+            System.out.println("notas del estudiante "+ (i+1)+": ");
+
+            while (true){
+                try {
+                    notas[i]= read.nextDouble();
+                    if (notas[i]< 0 || notas[i] > 10){
+                        System.out.println("Ingrese una nota en el valor 0 a 10");
+
+                    }else {
+                        break;
+                    }
+                }catch (InputMismatchException e){
+                    System.out.println("Entrada no valida,intente nuevamente ingresar un numero");
+                    read.next();
+                }
+            }
+        }
+
+        //imprimir arreglo de notas antes de ordenado
+        System.out.println("Notas antes de ordenar ");
+        System.out.println("Notas antes de ordenar:");
+        imprimirArreglo(notas);
+
+        // Implementar el algoritmo de burbuja para ordenar las notas en orden ascendente
+        burbuja.ordenarPorBurbuja(notas);
+
+        // Imprimir el arreglo de notas después de ordenar
+        System.out.println("Notas después de ordenar:");
+        imprimirArreglo(notas);
+
+
+
 
     }
 
